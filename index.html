@@ -30,6 +30,20 @@
     a{text-decoration:none;color:inherit}
     img{display:block;max-width:100%}
     .wrap{overflow-x:hidden}
+    .hidden{display:none !important}
+    .guest-slider-shell{
+  overflow:hidden;
+  width:100%;
+}
+
+.guest-slider-track{
+  display:flex;
+  transition:transform .4s ease;
+}
+
+.guest-slide{
+  min-width:100%;
+}
 
     .topbar{
       background:var(--cyan);
@@ -162,7 +176,7 @@
     .guest-progress-fill{position:absolute;left:0;bottom:8px;height:3px;background:var(--navy);border-radius:3px;width:0;transition:width .35s ease;z-index:1}
     .guest-title{font-size:22px;font-weight:700;color:#2f4064;margin:0 0 18px}
     .guest-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}
-    .guest-grid .full{grid-column:1 / span 1}
+    .guest-grid .full{grid-column:1 / -1}
     .guest-grid .full-wide{grid-column:1 / -1}
     .guest-label{display:block;font-size:15px;color:#4d5b79;font-weight:700;margin:0 0 8px}
     .footer-actions{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:42px}
@@ -365,38 +379,82 @@
                     <div class="guest-step" data-step="2">Guest 2<div class="dot"></div></div>
                     <div class="guest-step" data-step="3">Guest 3<div class="dot"></div></div>
                   </div>
-                  <div class="guest-title" id="guestTitle">Guest 1 Details</div>
-                  <div class="guest-grid" id="guestInfoGrid">
-                    <div>
-                      <label class="guest-label">First Name</label>
-                      <label class="form-control"><input type="text" id="guestFirstName" value="Benny"></label>
-                    </div>
-                    <div>
-                      <label class="guest-label">Last Name</label>
-                      <label class="form-control"><input type="text" id="guestLastName" value="Diaz"></label>
-                    </div>
-                    <div class="full">
-                      <label class="guest-label">Flight Number</label>
-                      <label class="form-control"><input type="text" id="guestFlight" value="UK-1998"></label>
-                    </div>
-                    <div class="payment-options hidden" id="paymentOptions">
-                      <h4>Select Payment Option:</h4>
-                      <div class="pay-pills">
-                        <div class="pay-pill active">Stripe</div>
-                        <div class="pay-pill">Wallet</div>
-                        <div class="pay-pill">Coupon Code</div>
-                      </div>
-                    </div>
-                    <div class="summary-card hidden" id="summaryCard">
-                      <h4>Order Summary:</h4>
-                      <div class="summary-box">
-                        <p>Standard Lounge</p>
-                        <p>Adult 1: $22</p>
-                        <p>Child 1: $25</p>
-                        <div class="sum-total"><span></span><span>Total: $40</span></div>
-                      </div>
-                    </div>
-                  </div>
+                  <div class="guest-slider-shell">
+  <div class="guest-slider-track" id="guestSliderTrack">
+
+    <div class="guest-slide">
+      <div class="guest-title">Guest 1 Details</div>
+      <div class="guest-grid">
+        <div>
+          <label class="guest-label">First Name</label>
+          <label class="form-control"><input type="text" value="Benny"></label>
+        </div>
+        <div>
+          <label class="guest-label">Last Name</label>
+          <label class="form-control"><input type="text" value="Diaz"></label>
+        </div>
+        <div class="full-wide">
+          <label class="guest-label">Flight Number</label>
+          <label class="form-control"><input type="text" value="UK-1998"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="guest-slide">
+      <div class="guest-title">Guest 2 Details</div>
+      <div class="guest-grid">
+        <div>
+          <label class="guest-label">First Name</label>
+          <label class="form-control"><input type="text" value="Benny"></label>
+        </div>
+        <div>
+          <label class="guest-label">Last Name</label>
+          <label class="form-control"><input type="text" value="Diaz"></label>
+        </div>
+        <div class="full-wide">
+          <label class="guest-label">Flight Number</label>
+          <label class="form-control"><input type="text" value="UK-1998"></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="guest-slide">
+      <div class="guest-title">Guest 3 Details</div>
+      <div class="guest-grid">
+        <div>
+          <label class="guest-label">First Name</label>
+          <label class="form-control"><input type="text" value="Benny"></label>
+        </div>
+        <div>
+          <label class="guest-label">Last Name</label>
+          <label class="form-control"><input type="text" value="Diaz"></label>
+        </div>
+        <div class="full-wide">
+          <label class="guest-label">Flight Number</label>
+          <label class="form-control"><input type="text" value="UK-1998"></label>
+        </div>
+        <div>
+          <h4>Select Payment Option:</h4>
+          <div class="pay-pills">
+            <div class="pay-pill active">Stripe</div>
+            <div class="pay-pill">Wallet</div>
+            <div class="pay-pill">Coupon Code</div>
+          </div>
+        </div>
+        <div>
+          <h4>Order Summary:</h4>
+          <div class="summary-box">
+            <p>Standard Lounge</p>
+            <p>Adult 1: $22</p>
+            <p>Child 1: $25</p>
+            <div class="sum-total"><span></span><span>Total: $40</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
                   <div class="footer-actions">
                     <button class="secondary-btn" id="backToBooking">Back</button>
                     <button class="primary-btn wide-btn" id="guestNextBtn">Next</button>
@@ -549,6 +607,7 @@
   <script>
     const bookingSection = document.getElementById('bookingSection');
     const sliderTrack = document.getElementById('sliderTrack');
+    const guestSliderTrack = document.getElementById('guestSliderTrack');
     const continueBtn = document.getElementById('continueBtn');
     const backToBooking = document.getElementById('backToBooking');
     const guestNextBtn = document.getElementById('guestNextBtn');
@@ -585,23 +644,23 @@
     function showSlider(index){
       sliderTrack.style.transform = `translateX(-${index * 100}%)`;
     }
+    function showGuestSlide(step){
+  guestSliderTrack.style.transform = `translateX(-${(step - 1) * 100}%)`;
+}
+function syncGuestStep(){
+  guestSteps.forEach((step, idx) => {
+    const n = idx + 1;
+    step.classList.toggle('active', n === state.guestStep);
+    step.classList.toggle('done', n < state.guestStep);
+  });
 
-    function syncGuestStep(){
-      guestTitle.textContent = `Guest ${state.guestStep} Details`;
-      guestFirstName.value = 'Benny';
-      guestLastName.value = 'Diaz';
-      guestFlight.value = 'UK-1998';
-      paymentOptions.classList.toggle('hidden', state.guestStep !== 3);
-      summaryCard.classList.toggle('hidden', state.guestStep !== 3);
-      guestSteps.forEach((step, idx) => {
-        const n = idx + 1;
-        step.classList.toggle('active', n === state.guestStep);
-        step.classList.toggle('done', n < state.guestStep);
-      });
-      const widths = {1:'0%',2:'50%',3:'100%'};
-      guestProgressFill.style.width = widths[state.guestStep];
-      guestNextBtn.textContent = state.guestStep === 3 ? 'Next' : 'Next';
-    }
+  const widths = {1:'0%',2:'50%',3:'100%'};
+  guestProgressFill.style.width = widths[state.guestStep];
+
+  showGuestSlide(state.guestStep);
+
+  guestNextBtn.textContent = state.guestStep === 3 ? 'Proceed to payment' : 'Next';
+}
 
     document.getElementById('findAirportLounge').addEventListener('click', () => {
       selectedLounge.value = 'Ist';
