@@ -1,56 +1,1506 @@
-.pax-grid{
-  display:grid;
-  grid-template-columns:1fr !important;
-  gap:14px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking details page (information)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --cyan:#11a9d4;
+      --cyan-dark:#0ea3cd;
+      --cyan-soft:#eefbff;
+      --navy:#14295c;
+      --navy-soft:#233b70;
+      --line:#e6ebf2;
+      --text:#182a57;
+      --muted:#7d879d;
+      --panel:#ffffff;
+      --info:#eef1f8;
+      --footer:#fafafa;
+      --shadow:0 12px 28px rgba(12,78,117,.14);
+    }
 
-.pax-col{
-  width:100%;
-}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Roboto',sans-serif;
+      color:var(--text);
+      background:#fff;
+    }
 
-.pax-row{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:10px 14px;
-  align-items:center;
-  padding:16px 0;
-  border-bottom:2px solid #eceff4;
-}
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    button,input,select{font:inherit}
 
-.pax-title{
-  font-size:18px;
-  line-height:1.2;
-  font-weight:700;
-}
+    .container{
+      width:min(1400px, calc(100% - 72px));
+      margin:0 auto;
+    }
 
-.pax-title small{
-  display:block;
-  font-size:14px;
-  margin-top:4px;
-}
+    .hidden{display:none!important}
 
-.stepper{
-  width:140px;
-  min-width:140px;
-  height:42px;
-  padding:0 10px;
-  justify-content:space-between;
-  border-radius:999px;
-}
+    /* NAVBAR */
+    .topbar{
+      height:74px;
+      background:var(--cyan);
+      display:flex;
+      align-items:center;
+    }
 
-.stepper button{
-  font-size:24px;
-  padding:0;
-}
+    .nav{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
 
-.stepper span{
-  font-size:18px;
-  min-width:18px;
-}
+    .logo{
+      height:28px;
+      width:auto;
+    }
 
-.price{
-  grid-column:1 / -1;
-  font-size:18px;
-  text-align:left;
-  margin-top:-4px;
-}
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      font-size:17px;
+      color:var(--navy);
+      font-weight:500;
+    }
+
+    .nav-right a{color:var(--navy)}
+
+    .nav-btn{
+      height:56px;
+      min-width:92px;
+      padding:0 20px;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:15px;
+      font-weight:700;
+      line-height:1;
+    }
+
+    .topup{
+      border:2px solid rgba(255,255,255,.82);
+      color:#fff !important;
+    }
+
+    .login{
+      border:2px solid var(--navy);
+      color:var(--navy)!important;
+      background:transparent;
+    }
+
+    .caret{
+      font-size:11px;
+      margin-left:5px;
+      position:relative;
+      top:-1px;
+    }
+
+    .menu-bars{
+      font-size:22px;
+      vertical-align:middle;
+    }
+
+    /* HERO */
+    .hero{
+      min-height:620px;
+      background:url('images/hero-cover.png') center/cover no-repeat;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:rgba(20,41,92,.28);
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding-top:64px;
+      padding-bottom:44px;
+    }
+
+    .hero-card{
+      width:min(720px, 100%);
+      min-height:420px;
+      background:rgba(244,247,252,.88);
+      border-radius:20px;
+      padding:34px 38px 28px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(2px);
+    }
+
+    .hero-title{
+      margin:0;
+      text-align:center;
+      color:var(--cyan-dark);
+      font-size:78px;
+      line-height:1;
+      font-weight:700;
+      letter-spacing:-0.02em;
+    }
+
+    .hero-copy{
+      margin:16px auto 22px;
+      max-width:620px;
+      text-align:center;
+      font-size:19px;
+      line-height:1.45;
+      color:#2d3f65;
+      font-weight:400;
+    }
+
+    .search-fields{
+      display:grid;
+      gap:20px;
+      max-width:600px;
+      margin:0 auto;
+    }
+
+    .search-field{
+      height:66px;
+      border-radius:12px;
+      background:#fff;
+      display:grid;
+      grid-template-columns:24px 1fr 18px;
+      align-items:center;
+      gap:16px;
+      padding:0 20px;
+      border:0;
+    }
+
+    .search-field img{
+      width:20px;
+      height:20px;
+      object-fit:contain;
+    }
+
+    .search-field input,
+    .search-field select{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--navy);
+      font-size:21px;
+      font-weight:400;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+    }
+
+    .search-field input::placeholder{
+      color:#7c879c;
+    }
+
+    .search-field select option{
+      color:var(--navy);
+    }
+
+    .chev{
+      font-size:15px;
+      color:#7e8798;
+      text-align:right;
+      user-select:none;
+      pointer-events:none;
+    }
+
+    .search-btn{
+      height:66px;
+      border:0;
+      border-radius:12px;
+      background:var(--cyan);
+      color:#fff;
+      font-size:18px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    /* GENERIC SECTION */
+    .section-white{
+      background:#fff;
+      padding:34px 0 0;
+    }
+
+    .section-heading{
+      margin:0 0 20px;
+      text-align:center;
+      font-size:22px;
+      font-weight:700;
+      color:var(--navy);
+      letter-spacing:-0.01em;
+    }
+
+    .section-heading span{
+      color:var(--cyan-dark);
+    }
+
+    /* BOOKING FRAME */
+    .frame{
+      width:min(1120px, 100%);
+      margin:0 auto;
+      padding:16px;
+      border-radius:18px;
+      background:linear-gradient(180deg, #43bde1 0%, #56c8e8 100%);
+      box-shadow:0 10px 22px rgba(13,85,125,.16);
+    }
+
+    .panel{
+      position:relative;
+      min-height:620px;
+      background:#fff;
+      border-radius:16px;
+      padding:28px 34px 26px;
+    }
+
+    .close{
+      position:absolute;
+      top:22px;
+      right:24px;
+      border:0;
+      background:none;
+      padding:0;
+      cursor:pointer;
+    }
+
+    .close img{
+      width:18px;
+      height:18px;
+    }
+
+    .panel-head h2{
+      margin:0 0 6px;
+      font-size:18px;
+      color:var(--navy);
+      font-weight:700;
+    }
+
+    .panel-head p{
+      margin:0 0 18px;
+      font-size:13px;
+      color:#4a5879;
+      font-weight:500;
+    }
+
+    .label{
+      margin:0 0 8px;
+      font-size:12px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:#969eb2;
+    }
+
+    .slider-shell,
+    .guest-slider-shell{
+      overflow:hidden;
+    }
+
+    .slider-track,
+    .guest-slider-track{
+      display:flex;
+      transition:transform .35s ease;
+    }
+
+    .slide,
+    .guest-slide{
+      min-width:100%;
+    }
+
+    .booking-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:26px;
+      margin-bottom:18px;
+    }
+
+    .form-control{
+      height:56px;
+      border:1.6px solid var(--line);
+      border-radius:8px;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:0 14px;
+    }
+
+    .form-control input,
+    .form-control select{
+      width:100%;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--navy);
+      font-size:16px;
+      font-weight:400;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+    }
+
+    .form-control input::placeholder{
+      color:#a7aebb;
+    }
+
+    .icon-end{
+      width:18px;
+      height:18px;
+      flex:0 0 auto;
+    }
+
+    .flight-wrap{
+      margin-bottom:20px;
+    }
+
+    .pax-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px 16px;
+    }
+
+    .pax-row{
+      min-height:78px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:8px 10px;
+      align-items:center;
+      border:1.6px solid var(--line);
+      border-radius:10px;
+      padding:14px 16px;
+      background:#fff;
+    }
+
+    .pax-title{
+      line-height:1.12;
+      color:#6d7588;
+    }
+
+    .pax-title strong{
+      display:block;
+      font-size:16px;
+      font-weight:500;
+      color:var(--navy);
+    }
+
+    .pax-title small{
+      display:block;
+      font-size:14px;
+      font-weight:700;
+      color:var(--navy);
+      margin-top:4px;
+    }
+
+    .stepper{
+      width:118px;
+      height:40px;
+      border:1.6px solid var(--line);
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 12px;
+    }
+
+    .stepper button{
+      border:0;
+      background:none;
+      color:#8d95a4;
+      font-size:20px;
+      line-height:1;
+      padding:0;
+      cursor:pointer;
+    }
+
+    .stepper span{
+      font-size:16px;
+      font-weight:700;
+      color:#5f6980;
+    }
+
+    .summary{
+      margin-top:18px;
+      border:1.6px solid var(--line);
+      border-radius:10px;
+      padding:14px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      color:#7d8596;
+    }
+
+    .summary .left div{
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .summary .right{
+      font-size:14px;
+      font-weight:700;
+      color:var(--navy);
+    }
+
+    .summary .right strong{
+      font-size:16px;
+    }
+
+    .cta-row{
+      display:flex;
+      justify-content:center;
+      padding-top:24px;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+      height:50px;
+      border-radius:8px;
+      font-size:14px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .primary-btn{
+      min-width:360px;
+      border:0;
+      background:var(--navy);
+      color:#fff;
+    }
+
+    .secondary-btn{
+      border:1.6px solid var(--line);
+      background:#fff;
+      color:#69748e;
+    }
+
+    /* GUEST INFO */
+    .guest-progress{
+      position:relative;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+      margin-bottom:18px;
+      padding-bottom:18px;
+    }
+
+    .guest-progress::before{
+      content:'';
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:8px;
+      height:2px;
+      background:#cfd6e4;
+    }
+
+    .guest-progress-fill{
+      position:absolute;
+      left:0;
+      bottom:8px;
+      height:2px;
+      background:var(--navy);
+      transition:width .35s ease;
+    }
+
+    .guest-step{
+      font-size:11px;
+      font-weight:700;
+      color:#6c7791;
+      position:relative;
+    }
+
+    .guest-step .dot{
+      position:absolute;
+      left:50%;
+      bottom:0;
+      transform:translate(-50%, 5px);
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:#cfd6e4;
+    }
+
+    .guest-step.active,
+    .guest-step.done{
+      color:var(--navy);
+    }
+
+    .guest-step.active .dot,
+    .guest-step.done .dot{
+      background:var(--navy);
+    }
+
+    .guest-title{
+      margin:0 0 14px;
+      font-size:16px;
+      font-weight:700;
+      color:#314267;
+    }
+
+    .guest-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px 18px;
+    }
+
+    .guest-label{
+      display:block;
+      margin:0 0 6px;
+      font-size:11px;
+      font-weight:700;
+      color:#4d5b79;
+    }
+
+    .full-wide{
+      grid-column:1/-1;
+    }
+
+    .footer-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:22px;
+    }
+
+    .pay-pills{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .pay-pill{
+      height:34px;
+      padding:0 14px;
+      border:1.4px solid var(--line);
+      border-radius:8px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:700;
+      color:#7b869f;
+    }
+
+    .pay-pill.active{
+      background:var(--navy);
+      border-color:var(--navy);
+      color:#fff;
+    }
+
+    .summary-box{
+      border:1.4px solid var(--line);
+      border-radius:8px;
+      padding:12px;
+      background:#fafbfe;
+    }
+
+    .summary-box p{
+      margin:0 0 6px;
+      font-size:12px;
+      color:#6f7b94;
+    }
+
+    .sum-total{
+      display:flex;
+      justify-content:space-between;
+      font-size:13px;
+      font-weight:700;
+      color:var(--navy);
+      margin-top:8px;
+    }
+
+    /* WHY CHOOSE */
+    .features-band{
+      background:var(--cyan-soft);
+      padding:42px 0 42px;
+    }
+
+    .feature-grid{
+      width:min(1120px,100%);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      text-align:center;
+    }
+
+    .feature img{
+      width:74px;
+      height:74px;
+      margin:0 auto 10px;
+      object-fit:contain;
+    }
+
+    .feature h3{
+      margin:0 0 8px;
+      font-size:22px;
+      color:var(--navy);
+      font-weight:700;
+    }
+
+    .feature .word{
+      font-size:22px;
+    }
+
+    .feature p{
+      margin:0 auto;
+      max-width:170px;
+      font-size:12px;
+      line-height:1.3;
+      color:#33466f;
+    }
+
+    /* INFO */
+    .info-band{
+      background:var(--info);
+      padding:42px 0;
+    }
+
+    .info-grid{
+      width:min(1120px,100%);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr .9fr;
+      gap:20px;
+      align-items:center;
+    }
+
+    .info-copy h2{
+      margin:0 0 8px;
+      font-size:26px;
+      color:var(--navy);
+      font-weight:700;
+      letter-spacing:-0.01em;
+    }
+
+    .info-copy p{
+      margin:0 0 18px;
+      font-size:16px;
+      line-height:1.42;
+      color:#26385f;
+      max-width:640px;
+    }
+
+    .link-row{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .outline-btn{
+      height:44px;
+      padding:0 20px;
+      border:1.6px solid var(--navy);
+      border-radius:8px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      font-weight:500;
+      color:var(--navy);
+      background:transparent;
+    }
+
+    .info-visual{
+      position:relative;
+      min-height:360px;
+    }
+
+    .info-visual .chair{
+      width:260px;
+      position:absolute;
+      right:40px;
+      bottom:0;
+    }
+
+    .info-visual .clock{
+      width:86px;
+      position:absolute;
+      right:170px;
+      top:0;
+    }
+
+    /* JOURNAL */
+    .journal{
+      background:#fff;
+      padding:42px 0 48px;
+    }
+
+    .journal .section-heading{
+      font-size:18px;
+      font-weight:400;
+      margin-bottom:24px;
+    }
+
+    .journal-window{
+      overflow:hidden;
+    }
+
+    .journal-track{
+      display:flex;
+      gap:24px;
+      width:max-content;
+      animation:move 22s linear infinite;
+    }
+
+    .journal-window:hover .journal-track{
+      animation-play-state:paused;
+    }
+
+    .journal-card{
+      width:280px;
+      flex:0 0 280px;
+    }
+
+    .journal-card img{
+      width:100%;
+      aspect-ratio:1.72/1;
+      object-fit:cover;
+    }
+
+    .journal-card h3{
+      margin:10px 0 0;
+      font-size:11px;
+      line-height:1.35;
+      color:var(--navy);
+      font-weight:500;
+    }
+
+    .read-more{
+      text-align:center;
+      margin-top:24px;
+    }
+
+    @keyframes move{
+      from{transform:translateX(0)}
+      to{transform:translateX(calc(-50% - 12px))}
+    }
+
+    /* FOOTER */
+    .footer{
+      background:var(--footer);
+      border-top:1.4px solid #d8dde7;
+      padding:24px 0 16px;
+    }
+
+    .footer-top{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:28px;
+      align-items:center;
+      padding-bottom:18px;
+      border-bottom:1.4px solid #d8dde7;
+    }
+
+    .footer-top img{
+      height:32px;
+      width:auto;
+      object-fit:contain;
+    }
+
+    .footer-top p{
+      margin:0;
+      max-width:760px;
+      font-size:12px;
+      line-height:1.4;
+      color:var(--navy);
+      font-weight:500;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr .85fr;
+      gap:24px;
+      padding:18px 0;
+      border-bottom:1.4px solid #d8dde7;
+    }
+
+    .footer h4{
+      margin:0 0 8px;
+      font-size:12px;
+      color:var(--navy);
+    }
+
+    .footer a,
+    .footer p,
+    .setting-line{
+      display:block;
+      margin:0 0 6px;
+      font-size:10px;
+      line-height:1.35;
+      color:#20345f;
+    }
+
+    .socials{
+      display:flex;
+      gap:10px;
+      margin-bottom:16px;
+    }
+
+    .socials img{
+      height:14px;
+      width:auto;
+    }
+
+    .setting-line{
+      font-weight:700;
+    }
+
+    .footer-bottom{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding-top:12px;
+      gap:20px;
+    }
+
+    .footer-bottom p{
+      margin:0;
+      font-size:10px;
+      color:#20345f;
+    }
+
+    .pay-logos{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+
+    .pay-logos img{
+      height:16px;
+      width:auto;
+    }
+
+    /* MOBILE */
+    @media (max-width:920px){
+      .container{width:calc(100% - 20px)}
+
+      .topbar{height:auto;padding:8px 0}
+      .nav{width:100%;flex-direction:column;gap:8px}
+      .nav-right{gap:10px;font-size:10px;flex-wrap:wrap;justify-content:center}
+      .nav-btn{height:30px;min-width:64px;padding:0 10px;font-size:10px}
+      .logo{height:22px}
+
+      .hero{min-height:auto}
+      .hero-inner{padding-top:20px;padding-bottom:20px}
+      .hero-card{width:min(500px,100%);min-height:auto;padding:20px 14px 16px;border-radius:12px}
+      .hero-title{font-size:32px}
+      .hero-copy{font-size:10px;margin-bottom:12px}
+      .search-fields{max-width:none}
+      .search-field{height:38px;padding:0 10px}
+      .search-field input,.search-field select{font-size:11px}
+      .search-btn{height:38px;font-size:11px}
+
+      .section-heading{font-size:16px;margin-bottom:12px}
+      .frame{padding:10px;border-radius:12px}
+      .panel{padding:16px 12px 14px;min-height:auto}
+      .booking-grid,.guest-grid,.info-grid,.footer-top,.footer-grid{grid-template-columns:1fr}
+      .pax-grid{grid-template-columns:1fr 1fr;gap:8px}
+      .pax-row{padding:10px;min-height:58px}
+      .pax-title strong{font-size:10px}
+      .pax-title small{font-size:9px}
+      .stepper{width:74px;height:28px;padding:0 8px}
+      .stepper span{font-size:11px}
+      .stepper button{font-size:13px}
+
+      .summary{padding:10px 12px}
+      .summary .left div,.summary .right{font-size:10px}
+      .primary-btn,.secondary-btn,.outline-btn{width:100%;min-width:0;height:38px;font-size:11px}
+      .footer-actions{grid-template-columns:1fr 1fr}
+
+      .feature-grid{grid-template-columns:1fr}
+      .feature img{width:46px;height:46px}
+      .feature h3,.feature .word{font-size:16px}
+      .feature p{max-width:120px;font-size:9px}
+
+      .info-copy h2{font-size:16px}
+      .info-copy p{font-size:11px}
+      .info-visual{min-height:180px}
+      .info-visual .chair{width:130px;right:calc(50% - 65px)}
+      .info-visual .clock{width:44px;right:calc(50% - 18px);top:0}
+
+      .journal-card{width:220px;flex-basis:220px}
+      .journal-card h3{font-size:10px}
+
+      .footer-top{gap:14px}
+      .footer-top img{height:24px}
+      .footer-top p{font-size:10px}
+      .footer-bottom{flex-direction:column;align-items:flex-start}
+      .pay-logos img{height:14px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <img class="logo" src="images/coop-logo.svg" alt="Coop travel eSIM">
+      <div class="nav-right">
+        <a class="nav-btn topup" href="#">Top Up</a>
+        <a class="nav-btn login" href="#">Login</a>
+        <a href="#">MENU <span class="menu-bars">☰</span></a>
+        <a href="#">ENG<span class="caret">▼</span></a>
+        <a href="#">GBP £<span class="caret">▼</span></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-card">
+        <h1 class="hero-title">Lounge for less</h1>
+        <p class="hero-copy">Enjoy the experience of affordable airport VIP lounges — more comfort, less cost. Let us know where you're travelling from and we'll do the rest.</p>
+
+        <div class="search-fields">
+          <label class="search-field">
+            <img src="icons/tr.svg" alt="">
+            <input list="countryList" id="heroCountry" value="Turkey" placeholder="Turkey">
+            <datalist id="countryList">
+              <option value="Turkey">
+              <option value="United Kingdom">
+              <option value="France">
+              <option value="Germany">
+              <option value="Italy">
+            </datalist>
+            <span class="chev">▼</span>
+          </label>
+
+          <label class="search-field">
+            <img src="icons/plane-feature.svg" alt="">
+            <input list="airportList" id="heroAirport" value="Istanbul International Airport" placeholder="Istanbul International Airport">
+            <datalist id="airportList">
+              <option value="Istanbul International Airport">
+              <option value="Istanbul International Airport 2">
+              <option value="Heathrow Airport">
+              <option value="Charles de Gaulle Airport">
+            </datalist>
+            <span class="chev">▼</span>
+          </label>
+
+          <label class="search-field">
+            <img src="icons/terminal.svg" alt="">
+            <input list="terminalList" id="heroTerminal" value="International Terminal" placeholder="International Terminal">
+            <datalist id="terminalList">
+              <option value="International Terminal">
+              <option value="Terminal 1">
+              <option value="Terminal 2">
+              <option value="Terminal 3">
+            </datalist>
+            <span class="chev">▼</span>
+          </label>
+
+          <button class="search-btn" id="findAirportLounge">Find Airport Lounge</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-white" id="bookingSection">
+    <div class="container">
+      <h2 class="section-heading">Choose your <span>lounge</span></h2>
+
+      <div class="frame">
+        <div class="panel">
+          <button class="close" type="button" aria-label="Close">
+            <img src="icons/close.svg" alt="">
+          </button>
+
+          <div class="slider-shell">
+            <div class="slider-track" id="sliderTrack">
+              <section class="slide">
+                <div class="panel-head">
+                  <h2>Book Your Lounge</h2>
+                  <p>Effortless access with premium comfort</p>
+                </div>
+
+                <div class="booking-grid">
+                  <div>
+                    <p class="label">Lounge</p>
+                    <label class="form-control">
+                      <select id="bookingLounge">
+                        <option value="">Select</option>
+                        <option>Standard Lounge</option>
+                        <option>Premium Lounge</option>
+                        <option>VIP Lounge</option>
+                      </select>
+                      <span class="chev">▼</span>
+                    </label>
+                  </div>
+
+                  <div>
+                    <p class="label">Date</p>
+                    <label class="form-control">
+                      <input id="bookingDate" type="date">
+                      <img src="icons/calendar.svg" class="icon-end" alt="">
+                    </label>
+                  </div>
+
+                  <div>
+                    <p class="label">Time</p>
+                    <label class="form-control">
+                      <input id="bookingTime" type="time">
+                      <img src="icons/clock.svg" class="icon-end" alt="">
+                    </label>
+                  </div>
+                </div>
+
+                <div class="flight-wrap">
+                  <p class="label">Flight Number *</p>
+                  <label class="form-control">
+                    <input id="flightNumber" placeholder="e.g. BA 289 - EK 002">
+                    <img src="icons/plane.svg" class="icon-end" alt="">
+                  </label>
+                </div>
+
+                <p class="label" style="margin-bottom:10px">Passengers</p>
+
+                <div class="pax-grid">
+                  <div class="pax-row">
+                    <div class="pax-title">
+                      <strong>Adults (12+)</strong>
+                      <small>$42</small>
+                    </div>
+                    <div class="stepper">
+                      <button type="button" data-target="adult" data-delta="-1">−</button>
+                      <span id="adultCount">1</span>
+                      <button type="button" data-target="adult" data-delta="1">+</button>
+                    </div>
+                  </div>
+
+                  <div class="pax-row">
+                    <div class="pax-title">
+                      <strong>Child (5-12)</strong>
+                      <small>$22</small>
+                    </div>
+                    <div class="stepper">
+                      <button type="button" data-target="child" data-delta="-1">−</button>
+                      <span id="childCount">0</span>
+                      <button type="button" data-target="child" data-delta="1">+</button>
+                    </div>
+                  </div>
+
+                  <div class="pax-row">
+                    <div class="pax-title">
+                      <strong>Infants (under 5)</strong>
+                      <small>FREE</small>
+                    </div>
+                    <div class="stepper">
+                      <button type="button" data-target="infant" data-delta="-1">−</button>
+                      <span id="infantCount">0</span>
+                      <button type="button" data-target="infant" data-delta="1">+</button>
+                    </div>
+                  </div>
+
+                  <div class="pax-row">
+                    <div class="pax-title">
+                      <strong>Senior Citizens</strong>
+                      <small>$12</small>
+                    </div>
+                    <div class="stepper">
+                      <button type="button" data-target="senior" data-delta="-1">−</button>
+                      <span id="seniorCount">0</span>
+                      <button type="button" data-target="senior" data-delta="1">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="summary">
+                  <div class="left">
+                    <div>Guests: <span id="guestTotal">1</span></div>
+                    <div>Subtotal: <span id="subTotal">$42</span></div>
+                  </div>
+                  <div class="right">TOTAL: <strong id="totalText">$42</strong></div>
+                </div>
+
+                <div class="cta-row">
+                  <button class="primary-btn" id="continueBtn">Continue to payment →</button>
+                </div>
+              </section>
+
+              <section class="slide">
+                <div class="panel-head">
+                  <h2>Guest Information</h2>
+                  <p>Please enter details for each guest</p>
+                </div>
+
+                <div class="guest-progress">
+                  <div class="guest-progress-fill" id="guestProgressFill"></div>
+                  <div class="guest-step active" data-step="1">Guest 1<div class="dot"></div></div>
+                  <div class="guest-step" data-step="2">Guest 2<div class="dot"></div></div>
+                  <div class="guest-step" data-step="3">Guest 3<div class="dot"></div></div>
+                </div>
+
+                <div class="guest-slider-shell">
+                  <div class="guest-slider-track" id="guestSliderTrack"></div>
+                </div>
+
+                <div class="footer-actions">
+                  <button class="secondary-btn" id="backBtn">Back</button>
+                  <button class="primary-btn" id="guestNextBtn">Next</button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-band">
+    <div class="container">
+      <h2 class="section-heading">Why choose <span>a lounge pass?</span></h2>
+
+      <div class="feature-grid">
+        <div class="feature">
+          <img src="icons/feature-lounge.svg" alt="">
+          <h3>600+</h3>
+          <p>Choose from multiple VIP lounges at each airport</p>
+        </div>
+
+        <div class="feature">
+          <img src="icons/feature-plane.svg" alt="">
+          <h3>350+</h3>
+          <p>Find our lounges at all the major airports worldwide</p>
+        </div>
+
+        <div class="feature">
+          <img src="icons/feature-coffee.svg" alt="">
+          <h3 class="word">Convenience</h3>
+          <p>Prebook for the best rates and peace of mind</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-band">
+    <div class="container info-grid">
+      <div class="info-copy">
+        <h2>What is a lounge pass?</h2>
+        <p>Enjoy an affordable, indulgent break from the hustle and bustle of the busy airport in one of our VIP lounges.</p>
+
+        <h2>How does it work?</h2>
+        <p>Prebook a slot and enjoy more comfort for less cost.</p>
+
+        <h2>How much does it cost?</h2>
+        <p>Much less than you might think — First Class comfort, without the First Class ticket!</p>
+
+        <div class="link-row">
+          <a class="outline-btn" href="#">Read all FAQs</a>
+          <a class="outline-btn" href="#">Get in touch</a>
+        </div>
+      </div>
+
+      <div class="info-visual">
+        <img class="clock" src="icons/info-clock.svg" alt="">
+        <img class="chair" src="icons/info-chair.svg" alt="">
+      </div>
+    </div>
+  </section>
+
+  <section class="journal">
+    <div class="container">
+      <h2 class="section-heading">The <span>Coop Travel eSIM</span> Journal</h2>
+
+      <div class="journal-window">
+        <div class="journal-track">
+          <article class="journal-card">
+            <img src="images/blog/thumb/blog-Turkey.jpg" alt="">
+            <h3>The Best eSIM For South Africa — Coop travel eSIM is Here</h3>
+          </article>
+          <article class="journal-card">
+            <img src="images/blog/thumb/blog-KZ.jpg" alt="">
+            <h3>Coop Travel eSIM Guide for Morocco — Pick the Best eSIM</h3>
+          </article>
+          <article class="journal-card">
+            <img src="images/blog/thumb/blog-London.jpg" alt="">
+            <h3>The Best eSIM For South India — Coop Travel eSIM is Here</h3>
+          </article>
+          <article class="journal-card">
+            <img src="images/blog/thumb/blog-Turkey.jpg" alt="">
+            <h3>The Best eSIM For South Africa — Coop travel eSIM is Here</h3>
+          </article>
+          <article class="journal-card">
+            <img src="images/blog/thumb/blog-KZ.jpg" alt="">
+            <h3>Coop Travel eSIM Guide for Morocco — Pick the Best eSIM</h3>
+          </article>
+          <article class="journal-card">
+            <img src="images/blog/thumb/blog-London.jpg" alt="">
+            <h3>The Best eSIM For South India — Coop Travel eSIM is Here</h3>
+          </article>
+        </div>
+      </div>
+
+      <div class="read-more">
+        <a class="outline-btn" href="#">Read more posts</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <img src="images/coop-logo.svg" alt="Coop travel eSIM">
+        <p>Coop Travel eSIM provides affordable, easy to use eSIMs for travel data in over 200 countries worldwide. Less fuss, better deals on internet abroad.</p>
+      </div>
+
+      <div class="footer-grid">
+        <div>
+          <h4>Popular Countries</h4>
+          <a href="#">Turkey</a>
+          <a href="#">USA</a>
+          <a href="#">UAE</a>
+          <a href="#">Saudi Arabia</a>
+          <a href="#">France</a>
+          <a href="#">Spain</a>
+          <a href="#">Italy</a>
+        </div>
+
+        <div>
+          <h4>Menu</h4>
+          <a href="#">About</a>
+          <a href="#">Compatibility</a>
+          <a href="#">FAQ</a>
+          <a href="#">Contact</a>
+          <a href="#">Blog</a>
+          <a href="#">Login / Account</a>
+        </div>
+
+        <div>
+          <h4>Useful Information</h4>
+          <a href="#">What is an eSIM</a>
+          <a href="#">Installation Guide</a>
+          <a href="#">Acceptable Use Policy</a>
+          <a href="#">Complaints Policy</a>
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of service</a>
+        </div>
+
+        <div>
+          <h4>Social</h4>
+          <div class="socials">
+            <img src="icons/bxl-facebook.svg" alt="">
+            <img src="icons/instagram-logo.svg" alt="">
+            <img src="icons/bxl-twitter.svg" alt="">
+          </div>
+
+          <h4>Settings</h4>
+          <div class="setting-line">GBP £ ▾ &nbsp;&nbsp; ENG ▾</div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>Copyright 2026 <span class="brand-highlight">cooptraveleSIM</span> All Rights Reserved.</p>
+        <div class="pay-logos">
+          <img src="icons/ApplePay.svg" alt="Apple Pay">
+          <img src="icons/GooglePay.svg" alt="Google Pay">
+          <img src="icons/Visa.svg" alt="Visa">
+          <img src="icons/mastercard.svg" alt="Mastercard">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const sliderTrack = document.getElementById('sliderTrack');
+    const guestSliderTrack = document.getElementById('guestSliderTrack');
+    const continueBtn = document.getElementById('continueBtn');
+    const backBtn = document.getElementById('backBtn');
+    const guestNextBtn = document.getElementById('guestNextBtn');
+    const guestProgressFill = document.getElementById('guestProgressFill');
+    const guestSteps = [...document.querySelectorAll('.guest-step')];
+    const ids = ['adult','child','infant','senior'];
+    const prices = { adult:42, child:22, infant:0, senior:12 };
+
+    const state = {
+      adult:1,
+      child:0,
+      infant:0,
+      senior:0,
+      guestStep:1,
+      guestCount:1
+    };
+
+    const countEls = Object.fromEntries(ids.map(k => [k, document.getElementById(k + 'Count')]));
+    const guestTotal = document.getElementById('guestTotal');
+    const subTotal = document.getElementById('subTotal');
+    const totalText = document.getElementById('totalText');
+    const flightNumber = document.getElementById('flightNumber');
+
+    function showSlider(i){
+      sliderTrack.style.transform = `translateX(-${i * 100}%)`;
+    }
+
+    function showGuestSlide(step){
+      guestSliderTrack.style.transform = `translateX(-${(step - 1) * 100}%)`;
+    }
+
+    function renderTotals(){
+      let total = 0;
+
+      ids.forEach(k => {
+        countEls[k].textContent = state[k];
+        total += state[k] * prices[k];
+      });
+
+      state.guestCount = Math.max(1, state.adult + state.child + state.senior);
+
+      guestTotal.textContent = state.guestCount;
+      subTotal.textContent = `$${total}`;
+      totalText.textContent = `$${total}`;
+
+      buildGuestSlides();
+    }
+
+    function buildGuestSlides(){
+      let html = '';
+
+      for(let i = 1; i <= state.guestCount; i++){
+        const isLast = i === state.guestCount;
+
+        html += `
+          <div class="guest-slide">
+            <div class="guest-title">Guest ${i} Details</div>
+            <div class="guest-grid">
+              <div>
+                <label class="guest-label">First Name</label>
+                <label class="form-control">
+                  <input placeholder="First Name">
+                </label>
+              </div>
+
+              <div>
+                <label class="guest-label">Last Name</label>
+                <label class="form-control">
+                  <input placeholder="Last Name">
+                </label>
+              </div>
+
+              <div class="full-wide">
+                <label class="guest-label">Flight Number</label>
+                <label class="form-control">
+                  <input placeholder="Flight Number">
+                </label>
+              </div>
+
+              ${isLast ? `
+                <div>
+                  <label class="guest-label">Select Payment Option:</label>
+                  <div class="pay-pills">
+                    <div class="pay-pill active">Stripe</div>
+                    <div class="pay-pill">Wallet</div>
+                    <div class="pay-pill">Coupon Code</div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="guest-label">Order Summary:</label>
+                  <div class="summary-box">
+                    <p>Standard Lounge</p>
+                    <p>Guests: ${state.guestCount}</p>
+                    <p>Subtotal: ${subTotal.textContent}</p>
+                    <div class="sum-total">
+                      <span></span>
+                      <span>Total: ${totalText.textContent}</span>
+                    </div>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      guestSliderTrack.innerHTML = html;
+      syncGuestStep();
+    }
+
+    function syncGuestStep(){
+      if(state.guestStep > state.guestCount) state.guestStep = state.guestCount;
+
+      guestSteps.forEach((step, idx) => {
+        const n = idx + 1;
+        const visible = n <= Math.min(3, state.guestCount);
+
+        step.style.display = visible ? 'block' : 'none';
+        step.classList.toggle('active', n === state.guestStep);
+        step.classList.toggle('done', n < state.guestStep && n <= state.guestCount);
+
+        const dot = step.querySelector('.dot');
+        if(dot) dot.style.display = visible ? 'block' : 'none';
+      });
+
+      const visible = Math.min(3, state.guestCount);
+      if(visible === 1){
+        guestProgressFill.style.width = '0%';
+      }else if(visible === 2){
+        guestProgressFill.style.width = state.guestStep === 1 ? '0%' : '100%';
+      }else{
+        const widthMap = {1:'0%',2:'50%',3:'100%'};
+        guestProgressFill.style.width = widthMap[Math.min(3, state.guestStep)];
+      }
+
+      showGuestSlide(state.guestStep);
+      guestNextBtn.textContent = state.guestStep === state.guestCount ? 'Proceed to payment' : 'Next';
+    }
+
+    document.querySelectorAll('.stepper button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const t = btn.dataset.target;
+        const d = +btn.dataset.delta;
+        state[t] = Math.max(0, state[t] + d);
+        renderTotals();
+      });
+    });
+
+    continueBtn.addEventListener('click', () => {
+      if(!flightNumber.value.trim()){
+        flightNumber.focus();
+        return;
+      }
+      state.guestStep = 1;
+      syncGuestStep();
+      showSlider(1);
+    });
+
+    backBtn.addEventListener('click', () => {
+      if(state.guestStep > 1){
+        state.guestStep--;
+        syncGuestStep();
+      }else{
+        showSlider(0);
+      }
+    });
+
+    guestNextBtn.addEventListener('click', () => {
+      if(state.guestStep < state.guestCount){
+        state.guestStep++;
+        syncGuestStep();
+      }else{
+        alert('Proceed to payment...');
+      }
+    });
+
+    document.getElementById('findAirportLounge').addEventListener('click', () => {
+      document.getElementById('bookingSection').scrollIntoView({ behavior:'smooth' });
+    });
+
+    renderTotals();
+    showSlider(0);
+  </script>
+</body>
+</html>
